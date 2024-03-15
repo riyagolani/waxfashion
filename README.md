@@ -52,28 +52,28 @@ cd Fashiongan</code></pre>
 </ul>
 
 <h3>Usage Examples with Selected Models</h3>
-<p>This section provides examples of how to generate images using models from the "selected models" folder, using the syntax similar to StyleGAN2-ADA and StyleGAN3 models.</p>
+<p>This section provides examples of how to generate images using models from the "selected_models" folder, using the syntax similar to StyleGAN2-ADA and StyleGAN3 models.</p>
 
 <h4>Generating Images with StyleGAN2-ADA Models</h4>
 <ol>
   <li><strong>Curated Images Without Truncation</strong><br>
-    <code>python generate.py --outdir=out --trunc=1 --seeds=85,265,297,849 --network=selected models/stylegan2-ada-model.pkl</code>
+    <code>python generate.py --outdir=out --trunc=1 --seeds=85,265,297,849 --network=selected_models/styleGAN2ada_Africanwax.pkl</code>
   </li>
   <li><strong>Uncurated Images With Truncation</strong><br>
-    <code>python generate.py --outdir=out --trunc=0.7 --seeds=600-605 --network=selected models/stylegan2-ada-model.pkl</code>
+    <code>python generate.py --outdir=out --trunc=0.7 --seeds=600-605 --network=selected_models/styleGAN2ada_Africanwax.pkl</code>
   </li>
   <li><strong>Rendering Images from Projected W</strong><br>
-    <code>python generate.py --outdir=out --projected_w=projected_w.npz --network=selected models/stylegan2-ada-model.pkl</code>
+    <code>python generate.py --outdir=out --projected_w=projected_w.npz --network=selected_models/styleGAN2ada_Africanwax.pkl</code>
   </li>
 </ol>
 
 <h4>Generating Images with StyleGAN3 Models</h4>
 <ol>
   <li><strong>Image Generation with Truncation</strong><br>
-    <code>python gen_images.py --outdir=out --trunc=1 --seeds=2 --network=selected models/stylegan3-model.pkl</code>
+    <code>python gen_images.py --outdir=out --trunc=1 --seeds=2 --network=selected_models/styleGAN3_Africanwax.pkl</code>
   </li>
   <li><strong>Generating Uncurated Images with Truncation</strong><br>
-    <code>python gen_images.py --outdir=out --trunc=0.7 --seeds=600-605 --network=selected models/stylegan3-model.pkl</code>
+    <code>python gen_images.py --outdir=out --trunc=0.7 --seeds=600-605 --network=selected_models/styleGAN3_Africanwax.pkl</code>
   </li>
 </ol>
 
