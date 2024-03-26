@@ -6,20 +6,30 @@
 #SBATCH --time=158:00:00
 #SBATCH --gres=gpu:2
 
-### change 5-digit MASTER_PORT as you wish, slurm will raise Error if duplicated with others
-### change WORLD_SIZE as gpus/node * num_nodes
-# export MASTER_PORT=12340
-# export WORLD_SIZE=4
+### Optionally, change 5-digit MASTER_PORT as you wish, ensuring it's not duplicated with others
+### Adjust WORLD_SIZE based on your setup (gpus/node * num_nodes)
+# export MASTER_PORT=<your_choice_of_port>
+# export WORLD_SIZE=<number_of_gpus>
 
-# ### get the first node name as master address
+# ### Uncomment below if you need to get the first node name as master address
 # echo "NODELIST="${SLURM_NODELIST}
 # master_addr=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
 # export MASTER_ADDR=$master_addr
 # echo "MASTER_ADDR="$MASTER_ADDR
 
-
 # Activate Conda environment
-source /home/PACE/sm98741n/miniconda3/etc/profile.d/conda.sh
-conda activate venv
+# Replace '/path/to/miniconda3' with your actual path to Miniconda3
+source /path/to/miniconda3/etc/profile.d/conda.sh
+conda activate <your_environment_name>
 
-srun python /home/PACE/sm98741n/FashionGAN-capstone/stylegan2-ada-pytorch/train.py --outdir=../exp1_training_runs --cfg=auto --data=/home/PACE/sm98741n/datasets/1KD512.zip --gpus=2 --batch=32 --kimg=5000 --snap=25
+# Replace with the path to your training script and adjust other parameters as necessary
+srun python /path/to/your/project/stylegan2-ada-pytorch/train.py \
+--outdir=/path/to/output/directory \
+--cfg=auto \
+--data=/path/to/your/dataset.zip \
+--gpus=2 \
+--batch=32 \
+--kimg=5000 \
+--snap=25
+
+# Add any additional notes or comments here
