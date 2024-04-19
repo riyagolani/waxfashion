@@ -1,4 +1,4 @@
-name: venv
+name: Fashiongan-env
 channels:
   - pytorch
   - defaults
