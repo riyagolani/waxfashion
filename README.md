@@ -56,24 +56,26 @@ cd Fashiongan</code></pre>
 
 <h4>Generating Images with StyleGAN2-ADA Models</h4>
 <ol>
+  <pre><code>cd stylegan2-ada-pytorch</code></pre>
   <li><strong>Curated Images Without Truncation</strong><br>
-    <code>python generate.py --outdir=out --trunc=1 --seeds=85,265,297,849 --network=selected_models/styleGAN2ada_Africanwax.pkl</code>
+    <code>python generate.py --outdir=out --trunc=1 --seeds=85,265,297,849 --network=.../selected_models/styleGAN2ada_Africanwax.pkl</code>
   </li>
   <li><strong>Uncurated Images With Truncation</strong><br>
-    <code>python generate.py --outdir=out --trunc=0.7 --seeds=600-605 --network=selected_models/styleGAN2ada_Africanwax.pkl</code>
+    <code>python generate.py --outdir=out --trunc=0.7 --seeds=600-605 --network=../selected_models/styleGAN2ada_Africanwax.pkl</code>
   </li>
   <li><strong>Rendering Images from Projected W</strong><br>
-    <code>python generate.py --outdir=out --projected_w=projected_w.npz --network=selected_models/styleGAN2ada_Africanwax.pkl</code>
+    <code>python generate.py --outdir=out --projected_w=projected_w.npz --network=../selected_models/styleGAN2ada_Africanwax.pkl</code>
   </li>
 </ol>
 
 <h4>Generating Images with StyleGAN3 Models</h4>
 <ol>
+  <pre><code>cd stylegan3</code></pre>
   <li><strong>Image Generation with Truncation</strong><br>
-    <code>python gen_images.py --outdir=out --trunc=1 --seeds=2 --network=selected_models/styleGAN3_Africanwax.pkl</code>
+    <code>python gen_images.py --outdir=out --trunc=1 --seeds=2 --network=../selected_models/styleGAN3_Africanwax.pkl</code>
   </li>
   <li><strong>Generating Uncurated Images with Truncation</strong><br>
-    <code>python gen_images.py --outdir=out --trunc=0.7 --seeds=600-605 --network=selected_models/styleGAN3_Africanwax.pkl</code>
+    <code>python gen_images.py --outdir=out --trunc=0.7 --seeds=600-605 --network=../selected_models/styleGAN3_Africanwax.pkl</code>
   </li>
 </ol>
 <h3>Using the Stable Diffusion Model from Hugging Face</h3>
