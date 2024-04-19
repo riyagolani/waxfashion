@@ -15,7 +15,7 @@
     <ol>
       <li><strong>Clone the Repository</strong><br>
         Clone your GitHub repository to your local machine using Git.<br>
-        <pre><code>git clone https://github.com/yourusername/Fashiongan.git
+        <pre><code>git clone https://github.com/researchpace/waxfashiongan.git
 cd Fashiongan</code></pre>
       </li>
       <li><strong>Create the Conda Environment</strong><br>
