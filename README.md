@@ -60,7 +60,7 @@ cd Fashiongan</code></pre>
 <ol>
   <pre><code>cd stylegan2-ada-pytorch</code></pre>
   <li><strong>Curated Images Without Truncation</strong><br>
-    <code>python generate.py --outdir=out --trunc=1 --seeds=85,265,297,849 --network=.../selected_models/styleGAN2ada_Africanwax.pkl</code>
+    <code>python generate.py --outdir=out --trunc=1 --seeds=85,265,297,849 --network=../selected_models/styleGAN2ada_Africanwax.pkl</code>
   </li>
   <li><strong>Uncurated Images With Truncation</strong><br>
     <code>python generate.py --outdir=out --trunc=0.7 --seeds=600-605 --network=../selected_models/styleGAN2ada_Africanwax.pkl</code>
