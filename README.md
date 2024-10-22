@@ -8,6 +8,8 @@
   <li><strong>Prerequisites</strong>
     <ul>
       <li>Ensure you have <a href="https://www.anaconda.com/products/distribution">Anaconda</a> or <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> installed on your system.</li>
+      <li> wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh</li>
     </ul>
   </li>
 
