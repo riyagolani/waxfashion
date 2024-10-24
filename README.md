@@ -83,9 +83,9 @@ The generated images are in the <code>out</code> directory.
 
 python gen_images.py --outdir=out --trunc=0.7 --seeds=600-605 --network=../selected_models/styleGAN3_Africanwax.pkl</code>
 
-### Use the selected StyleGAN models from Hugging Face
+## Use the selected StyleGAN models from Hugging Face
 
-### Use the Stable Diffusion models from Hugging Face
+## Use the Stable Diffusion models from Hugging Face
 
 <p>This section provides instructions on how to use the Stable Diffusion model refined on SDXL, which is hosted on a Hugging Face repository.</p>
 
