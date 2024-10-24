@@ -43,7 +43,7 @@ cd Fashiongan</code></pre>
   
 <pre><code>conda env remove -n Fashiongan-env</code></pre>
     
-### Use the selected StyleGAN models
+## Use the selected StyleGAN models
 
 The models are in the <code>selected_models</code> directories. 
 
@@ -55,7 +55,7 @@ The output of each job is put into a file called <code>slurm-<jobid>.out</code>,
 
 The generated images are in the <code>out</code> directory. 
 
-#### Generating patterns with StyleGAN2-ADA models
+### Generating patterns with StyleGAN2-ADA models
 
 <pre><code>cd stylegan2-ada-pytorch</code></pre>
 
@@ -71,7 +71,7 @@ The generated images are in the <code>out</code> directory.
 
 <code>python generate.py --outdir=out --projected_w=projected_w.npz --network=../selected_models/styleGAN2ada_Africanwax.pkl</code>
 
-#### Generating patterns with StyleGAN3 models
+### Generating patterns with StyleGAN3 models
 
 <pre><code>cd stylegan3</code></pre>
 
