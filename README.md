@@ -1,6 +1,8 @@
-# fashiongan
+# AfricanWaxFashionGan
 
 ## Usage
+
+These are the steps to use 2 models trained on wax patterns.
 
 <h3>Setting Up the Environment</h3>
 
