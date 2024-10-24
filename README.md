@@ -58,6 +58,7 @@ cd Fashiongan</code></pre>
 
 <h4>Generating Images with StyleGAN2-ADA Models</h4>
 <ol>
+  This code needs to be run in a slurm job
   <pre><code>cd stylegan2-ada-pytorch</code></pre>
   <li><strong>Curated Images Without Truncation</strong><br>
     <code>python generate.py --outdir=out --trunc=1 --seeds=85,265,297,849 --network=../selected_models/styleGAN2ada_Africanwax.pkl</code>
