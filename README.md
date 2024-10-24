@@ -43,13 +43,13 @@ cd Fashiongan</code></pre>
   
 <pre><code>conda env remove -n Fashiongan-env</code></pre>
     
-### Use the selected models
+### Use the selected StyleGAN models
+
+The models are in the <code>selected_models</code> directories. 
 
 Run the following scrips in Slurm jobs. Sample Slurm files are provided.
 
 <pre><code>sbatch slurmfile.slurm</code></pre>
-
-The models are in the <code>selected_models</code> directories. 
 
 The output of each job is put into a file called <code>slurm-<jobid>.out</code>, so you can look at the output of a job run if there are errors or any important data.  
 
@@ -83,8 +83,10 @@ The generated images are in the <code>out</code> directory.
 
 python gen_images.py --outdir=out --trunc=0.7 --seeds=600-605 --network=../selected_models/styleGAN3_Africanwax.pkl</code>
 
+### Use the selected StyleGAN models from Hugging Face
 
-<h3>Using the Stable Diffusion Model from Hugging Face</h3>
+### Use the Stable Diffusion models from Hugging Face
+
 <p>This section provides instructions on how to use the Stable Diffusion model refined on SDXL, which is hosted on a Hugging Face repository.</p>
 
 <h4>Installation Requirements</h4>
