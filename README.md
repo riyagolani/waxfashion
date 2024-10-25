@@ -1,8 +1,8 @@
 # AfricanWaxFashionGan
 
-## Setting Up the Environment
+## Datasets
 
-### Datasets
+## Setting Up the Environment
 
 ### Prerequisites
 
