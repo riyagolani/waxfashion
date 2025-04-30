@@ -6,12 +6,15 @@ import time, random, threading
 
 # --- Hugging Face API Setup ---
 HF_API_KEY = st.secrets["HUGGING_FACE_API_KEY"]
-headers = {"Authorization": f"Bearer {HF_API_KEY}"}
-MODEL_NAME = "stabilityai/stable-diffusion-xl-base-1.0"
-MODEL_API_URL = f"https://api-inference.huggingface.co/models/{MODEL_NAME}"
+headers = {
+    "Authorization": f"Bearer {HF_API_KEY}",
+    "Accept": "image/png",
+    "Content-Type": "application/json"
+}
+MODEL_API_URL = "https://jvjrtjxevy6pdyw9.us-east4.gcp.endpoints.huggingface.cloud"
 
 def generate_image(prompt):
-    data = {"inputs": prompt}
+    data = {"inputs": prompt, "parameters": {}}
     response = requests.post(MODEL_API_URL, headers=headers, json=data)
     response.raise_for_status()
     return response.content
