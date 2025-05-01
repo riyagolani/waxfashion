@@ -1,8 +1,10 @@
 import streamlit as st
 import requests
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from io import BytesIO
-import time, random, threading
+import time
+import random
+import threading
 
 # --- Hugging Face API Setup ---
 HF_API_KEY = st.secrets["HUGGING_FACE_API_KEY"]
@@ -15,9 +17,28 @@ MODEL_API_URL = "https://jvjrtjxevy6pdyw9.us-east4.gcp.endpoints.huggingface.clo
 
 def generate_image(prompt):
     data = {"inputs": prompt, "parameters": {}}
-    response = requests.post(MODEL_API_URL, headers=headers, json=data)
-    response.raise_for_status()
-    return response.content
+    try:
+        response = requests.post(
+            MODEL_API_URL,
+            headers=headers,
+            json=data,
+            timeout=900
+        )
+        response.raise_for_status()
+
+        img_bytes = response.content
+        if len(img_bytes) < 1000:
+            raise ValueError("The response was too small, likely not a valid image.")
+
+        Image.open(BytesIO(img_bytes)).verify()
+        return img_bytes
+
+    except requests.Timeout:
+        raise RuntimeError(f"The request timed out after {900 // 60} minutes.")
+    except requests.RequestException as e:
+        raise RuntimeError(f"An error occurred while contacting the API: {e}")
+    except (UnidentifiedImageError, Exception) as e:
+        raise RuntimeError(f"Failed to process image: {e}")
 
 st.set_page_config(page_title="Wax Pattern Study", layout="centered")
 
@@ -48,38 +69,51 @@ if st.session_state.phase == "setup":
     st.markdown("### Prompt")
     st.info(prompt)
 
-    num_images = st.number_input("How many images to generate?", min_value=1, max_value=10, value=3)
+    num_images = st.number_input("How many images to generate?", min_value=1, max_value=3, value=1)
+    st.caption("⚠️ Note: Each image may take up to 5 minutes to generate. Maximum 3 images per batch.")
 
     if st.button("Create"):
-        start_time = time.time()
         images = []
         status = st.empty()
         elapsed_text = st.empty()
 
         for i in range(num_images):
             status.info(f"Generating {i + 1} of {num_images}...")
+            elapsed_text.text(f"⏳ Time elapsed: 0 seconds")
+            result = {"bytes": None, "error": None, "done": False}
 
-            result = {"ready": False, "bytes": None}
+            def worker():
+                try:
+                    img_bytes = generate_image(f"{prompt} Variation {i} {random.randint(0, 99999)}")
+                    result["bytes"] = img_bytes
+                except Exception as e:
+                    result["error"] = str(e)
+                finally:
+                    result["done"] = True
 
-            def generate_with_flag():
-                result["bytes"] = generate_image(f"{prompt} Variation {i} {random.randint(0, 99999)}")
-                result["ready"] = True
-
-            thread = threading.Thread(target=generate_with_flag)
+            thread = threading.Thread(target=worker)
             thread.start()
 
-            while not result["ready"]:
-                elapsed = int(time.time() - start_time)
-                elapsed_text.text(f"\u23F1 Time elapsed: {elapsed} seconds")
-                time.sleep(0.5)
+            elapsed = 0
+            while not result["done"]:
+                elapsed += 1
+                elapsed_text.text(f"⏳ Time elapsed: {elapsed} seconds")
+                time.sleep(1)
 
             thread.join()
-            images.append(result["bytes"])
 
-        st.session_state.images = images
-        st.session_state.index = 0
-        st.session_state.phase = "result"
-        st.rerun()
+            if result["error"]:
+                st.error(f"❗ Failed to generate image {i + 1}: {result['error']}")
+            elif result["bytes"]:
+                images.append(result["bytes"])
+
+        if images:
+            st.session_state.images = images
+            st.session_state.index = 0
+            st.session_state.phase = "result"
+            st.rerun()
+        else:
+            st.warning("No images were successfully generated. Please try again.")
 
 # --- Evaluation Phase ---
 elif st.session_state.phase == "result":
