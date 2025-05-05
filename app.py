@@ -54,7 +54,7 @@ st.markdown("""
         border-right: 30px solid transparent;
         border-bottom: 30px solid transparent;
         box-sizing: border-box;
-        border-image: url("https://raw.githubusercontent.com/riyagolani/waxfashion/1b3350c8618c460dc26c79bf2031907364acfe48/wax_pattern.png") 60 round;
+        border-image: url("https://i.imgur.com/eWbCs47.png") 60 round;
     }
     [data-testid="stAppViewContainer"] {
         padding: 30px;
