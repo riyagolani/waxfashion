@@ -25,6 +25,10 @@ def generate_image(prompt):
             timeout=900
         )
         response.raise_for_status()
+        # Debug print: log response content type + size
+        st.write("Response headers:", response.headers)
+        st.write("Response content size (bytes):", len(response.content))
+        st.write("Response content preview:", response.content[:500])
 
         img_bytes = response.content
         if len(img_bytes) < 1000:
@@ -42,11 +46,33 @@ def generate_image(prompt):
 
 st.set_page_config(page_title="Wax Pattern Study", layout="centered")
 
+# --- Add Border Using CSS ---
+st.markdown("""
+    <style>
+    .stApp {
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+        border-bottom: 30px solid transparent;
+        box-sizing: border-box;
+        border-image: url("https://raw.githubusercontent.com/riyagolani/waxfashion/1b3350c8618c460dc26c79bf2031907364acfe48/wax_pattern.png") 60 round;
+    }
+    [data-testid="stAppViewContainer"] {
+        padding: 30px;
+    }
+    .stImage > img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # --- Init Session ---
 if "phase" not in st.session_state:
     st.session_state.phase = "setup"
     st.session_state.images = []
     st.session_state.index = 0
+    st.session_state.prompt = ""
 
 # --- Dropdown options ---
 colors = ["Red", "Blue", "Yellow", "Green", "Multicolor"]
@@ -72,10 +98,12 @@ if st.session_state.phase == "setup":
     num_images = st.number_input("How many images to generate?", min_value=1, max_value=3, value=1)
     st.caption("⚠️ Note: Each image may take up to 5 minutes to generate. Maximum 3 images per batch.")
 
-    if st.button("Create"):
+    if st.button("Generate"):
         images = []
         status = st.empty()
         elapsed_text = st.empty()
+
+        st.session_state.prompt = prompt  # Save the prompt
 
         for i in range(num_images):
             status.info(f"Generating {i + 1} of {num_images}...")
@@ -117,33 +145,38 @@ if st.session_state.phase == "setup":
 
 # --- Evaluation Phase ---
 elif st.session_state.phase == "result":
+    st.title("Your Generated Wax Pattern")
+    st.subheader("Prompt Used")
+    st.info(st.session_state.get("prompt", "No prompt found."))
+
     idx = st.session_state.index
     imgs = st.session_state.images
 
     if idx < len(imgs):
-        col_left, col_center, col_right = st.columns([1, 2, 1])
-        with col_center:
-            st.subheader(f"Image {idx + 1} of {len(imgs)}")
+        st.subheader(f"Image {idx + 1} of {len(imgs)}")
 
-            img = Image.open(BytesIO(imgs[idx]))
-            st.image(img, width=400)
+        img = Image.open(BytesIO(imgs[idx]))
+        st.image(img, width=400)
 
-            buffered = BytesIO()
-            img.save(buffered, format="PNG")
-            st.download_button(
-                label="Download Image",
-                data=buffered.getvalue(),
-                file_name=f"wax_pattern_{idx + 1}.png",
-                mime="image/png",
-                key=f"download_button_{idx}"
-            )
+        buffered = BytesIO()
+        img.save(buffered, format="PNG")
 
-            is_last = idx == len(imgs) - 1
-            btn_label = "Done" if is_last else "Next"
+        # Download button
+        st.download_button(
+            label="Download Image",
+            data=buffered.getvalue(),
+            file_name=f"wax_pattern_{idx + 1}.png",
+            mime="image/png",
+            key=f"download_button_{idx}"
+        )
 
-            if st.button(btn_label, key=f"nav_button_{idx}"):
-                st.session_state.index += 1
-                if is_last:
-                    for key in ["phase", "images", "index"]:
-                        st.session_state.pop(key, None)
-                st.rerun()
+        # Done/Next button
+        is_last = idx == len(imgs) - 1
+        btn_label = "Done" if is_last else "Next"
+
+        if st.button(btn_label, key=f"nav_button_{idx}"):
+            st.session_state.index += 1
+            if is_last:
+                for key in ["phase", "images", "index", "prompt"]:
+                    st.session_state.pop(key, None)
+            st.rerun()
