@@ -107,12 +107,12 @@ if st.session_state.phase == "setup":
     with col3:
         selected_theme = st.selectbox("Theme", themes)
 
-    prompt = f"Create a {selected_color} African Wax pattern with {selected_shape} and {selected_theme} theme."
+    prompt = f"Generate a {selected_theme} {selected_color} African Wax pattern with {selected_shape}."
     st.markdown("### Prompt")
     st.info(prompt)
 
     num_images = st.number_input("How many images to generate?", min_value=1, max_value=3, value=1)
-    st.caption("⚠️ Note: Each image may take up to 5 minutes to generate. Maximum 3 images per batch.")
+    st.caption("⚠️ Note - Each image may take up to 5 minutes to generate. Maximum 3 images per batch.")
 
     if st.button("Generate"):
         images = []
@@ -130,7 +130,7 @@ if st.session_state.phase == "setup":
 
         for i in range(num_images):
             status.info(f"Generating {i + 1} of {num_images}...")
-            elapsed_text.text(f"⏳ Time elapsed: 0 seconds")
+            elapsed_text.text(f"⏳ Time elapsed - 0 seconds")
             result = {"bytes": None, "error": None, "done": False}
 
             def worker():
@@ -148,13 +148,13 @@ if st.session_state.phase == "setup":
             elapsed = 0
             while not result["done"]:
                 elapsed += 1
-                elapsed_text.text(f"⏳ Time elapsed: {elapsed} seconds")
+                elapsed_text.text(f"⏳ Time elapsed - {elapsed} seconds")
                 time.sleep(1)
 
             thread.join()
 
             if result["error"]:
-                st.error(f"❗ Failed to generate image {i + 1}: {result['error']}")
+                st.error(f"❗ Failed to generate image {i + 1} - {result['error']}")
             elif result["bytes"]:
                 images.append(result["bytes"])
 
