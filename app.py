@@ -79,6 +79,22 @@ colors = ["Red", "Blue", "Yellow", "Green", "Multicolor"]
 shapes = ["Circles", "Squares", "Triangles", "Spirals", "Waves"]
 themes = ["Traditional", "Modern", "Abstract"]
 
+# --- Example Pattern URLs ---
+example_images = [
+    {
+        "url": "https://i.imgur.com/m7a9sZk.png",
+        "caption": "Blue & White Wavy Pattern"
+    },
+    {
+        "url": "https://i.imgur.com/3GJarE9.png",
+        "caption": "Olive & White Tribal Ovals"
+    },
+    {
+        "url": "https://i.imgur.com/xa6QOnC.png",
+        "caption": "Red & Gold Swirling Lines"
+    }
+]
+
 # --- Setup Phase ---
 if st.session_state.phase == "setup":
     st.title("Create Your Own African Wax Pattern")
@@ -104,6 +120,13 @@ if st.session_state.phase == "setup":
         elapsed_text = st.empty()
 
         st.session_state.prompt = prompt  # Save the prompt
+
+        # Show previous example patterns
+        st.markdown("### Previous Examples")
+        cols = st.columns(3)
+        for col, ex in zip(cols, example_images):
+            with col:
+                st.image(ex["url"], caption=ex["caption"], use_container_width='always')
 
         for i in range(num_images):
             status.info(f"Generating {i + 1} of {num_images}...")
